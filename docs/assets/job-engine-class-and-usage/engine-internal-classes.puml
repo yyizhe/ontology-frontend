@@ -1,0 +1,113 @@
+@startuml
+!pragma layout smetana
+top to bottom direction
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam linetype ortho
+skinparam padding 12
+skinparam nodesep 45
+skinparam ranksep 55
+
+package "服务实现" {
+  class DefaultJobDefinitionService {
+    +create() : JobView
+    +update() : JobView
+  }
+  class DefaultJobExecutionService {
+    +execute() : ExecutionReceipt
+    +triggerByCron() : ExecutionReceipt
+    +triggerByEvent() : ExecutionReceipt
+    +cancel() : CancelReceipt
+    +terminate() : TerminateReceipt
+    +retryFailed() : ExecutionReceipt
+  }
+  class DefaultJobQueryService {
+    +getExecution() : ExecutionView
+    +listTasks() : Page
+    +statistics() : ExecutionStatistics
+  }
+}
+
+package "运行与调度" {
+  class DefaultJobEngineRuntime #EAF4FF {
+    +start() : void
+    +shutdown(gracePeriod) : void
+  }
+  class DefaultHandlerRegistry #EAF5EB {
+    -handlers : Map<String, JobHandler>
+    -frozen : boolean
+    +register(key, handler) : void
+    +contains(key) : boolean
+    ~getRequired(key) : JobHandler
+    ~freeze() : void
+  }
+  class JobPlanner {
+    ~plan(executionId) : void
+  }
+  class TaskDispatcher {
+    ~dispatch(executionId) : void
+  }
+  class ExecutionCoordinator {
+    ~admit() : ExecutionReceipt
+    ~completeTask() : void
+    ~finishExecution() : void
+    ~cancelOrTerminate() : void
+  }
+}
+
+package "持久化适配" {
+  class EnginePersistence {
+    -jobRepository : JobRepository
+    -executionRepository : ExecutionRepository
+    -taskRepository : TaskRepository
+    ~inTransaction(action) : result
+  }
+  interface JobRepository {
+    +insert(record) : JobRecord
+    +update(record) : JobRecord
+    +findById(id) : Optional
+    +list(query, page) : Page
+    +deleteById(id) : void
+  }
+  interface ExecutionRepository {
+    +insert(record) : ExecutionRecord
+    +update(record) : ExecutionRecord
+    +findById(id) : Optional
+    +list(query, page) : Page
+    +deleteById(id) : void
+  }
+  interface TaskRepository {
+    +insert(record) : TaskRecord
+    +insertBatch(records) : void
+    +update(record) : TaskRecord
+    +findById(id) : Optional
+    +list(query, page) : Page
+    +deleteById(id) : void
+  }
+  EnginePersistence o-- JobRepository
+  EnginePersistence o-- ExecutionRepository
+  EnginePersistence o-- TaskRepository
+}
+
+DefaultJobDefinitionService --> DefaultHandlerRegistry : validate 路由
+DefaultJobDefinitionService --> EnginePersistence : 定义修订
+DefaultJobExecutionService --> ExecutionCoordinator : 准入和执行控制
+DefaultJobExecutionService ..> DefaultJobEngineRuntime : 唤醒后台处理
+DefaultJobQueryService --> EnginePersistence : 只读查询
+DefaultJobEngineRuntime --> DefaultHandlerRegistry : 启动冻结
+DefaultJobEngineRuntime --> JobPlanner
+DefaultJobEngineRuntime --> TaskDispatcher
+DefaultJobEngineRuntime --> ExecutionCoordinator : 启停与收尾
+JobPlanner --> DefaultHandlerRegistry : 取得 Handler
+JobPlanner --> EnginePersistence : 固定输入和保存计划
+TaskDispatcher --> DefaultHandlerRegistry : 取得 Handler
+TaskDispatcher --> ExecutionCoordinator : 提交任务结果
+ExecutionCoordinator --> EnginePersistence : 状态和计数事务
+note bottom of EnginePersistence
+  只管理 Job、JobExecution、Task。
+  业务产物由 Handler 调用业务存储保存。
+end note
+@enduml

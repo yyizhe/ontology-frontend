@@ -1,0 +1,74 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam classBackgroundColor white
+skinparam classBorderColor #52606D
+
+class "宿主业务服务" as Host #EAF4FF
+
+package "引擎对外 API" {
+  interface JobDefinitionService {
+    +create(command, caller) : JobView
+    +update(command, caller) : JobView
+    +setEnabled(command, caller) : JobView
+    +archive(command, caller) : JobView
+  }
+  interface JobExecutionService {
+    +execute(command, caller) : ExecutionReceipt
+    +triggerByCron(command, scheduler) : ExecutionReceipt
+    +triggerByEvent(command, consumer) : ExecutionReceipt
+    +cancel(command, caller) : CancelReceipt
+    +terminate(command, caller) : TerminateReceipt
+    +retryFailed(command, caller) : ExecutionReceipt
+  }
+  interface JobQueryService {
+    +getJob(id, caller) : JobView
+    +listJobs(query, page, caller) : Page
+    +getExecution(id, caller) : ExecutionView
+    +listExecutions(query, page, caller) : Page
+    +getTask(id, caller) : TaskView
+    +listTasks(query, page, caller) : Page
+    +statistics(id, caller) : ExecutionStatistics
+  }
+  interface HandlerRegistry {
+    +register(handlerKey, handler) : void
+    +contains(handlerKey) : boolean
+  }
+  interface JobEngineRuntime {
+    +start() : void
+    +status() : RuntimeView
+    +shutdown(gracePeriod) : void
+    +close() : void
+  }
+}
+
+package "业务扩展 SPI" {
+  interface JobHandler #EAF5EB {
+    +validate(configuration, caller) : void
+    +plan(context, sink) : void
+    +execute(context) : TaskResult
+  }
+  class DataObjectIngestionHandler
+  class TextEnrichmentHandler
+  class LineageEnrichmentHandler
+  JobHandler <|.. DataObjectIngestionHandler
+  JobHandler <|.. TextEnrichmentHandler
+  JobHandler <|.. LineageEnrichmentHandler
+}
+
+Host --> JobDefinitionService : 管理定义
+Host --> JobExecutionService : 触发与控制
+Host --> JobQueryService : 查询进度
+Host --> HandlerRegistry : 启动前注册
+Host --> JobEngineRuntime : 生命周期
+HandlerRegistry o--> "0..*" JobHandler : handlerKey 映射
+JobDefinitionService ..> JobHandler : validate
+JobEngineRuntime ..> JobHandler : 调度 plan / execute
+@enduml

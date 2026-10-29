@@ -1,0 +1,46 @@
+.tree-breadcrumb { display:flex; align-items:center; gap:5px; flex-wrap:wrap; min-width:0; color:var(--muted); font-size:11px; }
+.tree-breadcrumb>svg { flex:none; }
+.tree-breadcrumb>button { max-width:200px; min-width:0; padding:4px; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border-radius:3px; }
+.tree-breadcrumb>button:hover { color:var(--blue); background:#edf4fc; }
+.tree-breadcrumb>button[aria-current] { color:var(--ink); font-weight:600; }
+.tree-path-menu { position:relative; }
+.tree-path-menu summary { display:grid; place-items:center; width:26px; height:26px; cursor:pointer; border-radius:3px; list-style:none; }
+.tree-path-menu summary::-webkit-details-marker { display:none; }
+.tree-path-menu summary:hover { background:#edf4fc; color:var(--blue); }
+.tree-path-menu>div { position:absolute; top:30px; left:0; z-index:4; width:260px; max-width:calc(100vw - 60px); max-height:280px; overflow:auto; border:1px solid var(--line); border-radius:5px; padding:5px; background:white; box-shadow:0 5px 18px #19315120; }
+.tree-path-menu button { display:flex; gap:8px; align-items:center; padding:8px; width:100%; min-height:32px; font-size:12px; text-align:left; }
+.tree-path-menu button:hover { background:#edf4fc; }
+.tree-path-menu small { color:var(--muted); flex:none; font-size:10px; }
+.tree-path-menu span { overflow-wrap:anywhere; }
+.tree-tools { display:flex; align-items:center; gap:4px; }
+.tree-tools button,.tree-collapse-button,.tree-focus-button { display:inline-grid; place-items:center; width:28px; height:28px; padding:0; border-radius:4px; color:#71839a; flex:none; }
+.tree-tools button:hover,.tree-collapse-button:hover,.tree-focus-button:hover { background:#edf4fc; color:var(--blue); }
+.tree-tools button:disabled { opacity:.4; cursor:default; }
+.directory-search { display:flex; align-items:center; gap:6px; margin:12px; padding:0 7px; height:34px; border:1px solid var(--line); border-radius:4px; color:var(--muted); }
+.directory-search>svg { flex:none; }
+.directory-search input { width:100%; min-width:0; border:0; outline:0; font-size:11px; background:transparent; }
+.directory-search button { display:grid; place-items:center; padding:0; }
+.directory>.tree-breadcrumb { padding:0 9px 10px; border-bottom:1px solid var(--line); }
+.directory .deep-directory-tree { min-height:0; max-height:650px; overflow:auto; overscroll-behavior:contain; }
+.deep-directory-tree .tree-children { margin:0; padding:0; border:0; }
+.deep-directory-tree .folder { height:36px; gap:4px; padding:0 4px 0 calc(2px + var(--directory-indent)); }
+.deep-directory-tree .directory-toggle { display:grid; place-items:center; width:18px; height:28px; flex:none; padding:0; }
+.deep-directory-tree .directory-toggle:disabled { cursor:default; }
+.deep-directory-tree .directory-select { display:flex; align-items:center; gap:5px; flex:1; min-width:0; padding:0; height:100%; text-align:left; }
+.deep-directory-tree .directory-select svg { flex:none; }
+.deep-directory-tree .directory-select b { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.deep-directory-tree .folder>em { flex:none; font-size:10px; }
+.tree-depth-badge { flex:none; border-radius:3px; padding:2px 3px; font-size:9px; font-style:normal; font-weight:500; color:#687d94; background:#eaf0f6; }
+.tree-no-results { padding:16px; font-size:12px; color:var(--muted); }
+.asset-directory-head>div { min-width:0; }
+.asset-directory-head h2 { overflow-wrap:anywhere; }
+.asset-directory-head .tree-breadcrumb { margin-bottom:6px; }
+.spg-core-panel { overflow:visible; }
+.tree-location-bar { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 16px; border-bottom:1px solid var(--line); border-radius:8px 8px 0 0; background:white; }
+.spg-core-name .tree-focus-button { margin-left:auto; width:24px; height:24px; }
+.spg-core-name>span { flex:1; }
+.spg-tree-create-row>span { max-width:230px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+@media(max-width:760px) {
+  .tree-breadcrumb>button { max-width:130px; }
+  .directory .deep-directory-tree { max-height:320px; }
+}

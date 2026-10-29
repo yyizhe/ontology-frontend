@@ -1,0 +1,244 @@
+/* Use the storage directory's card, toolbar and table treatment throughout
+   ontology management and model connections. Keep the shared app frame intact. */
+.management-pages {
+  --management-heading: #24415f;
+  --management-muted: #6b7c93;
+  --management-table-head: #f8fbfe;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.management-pages :is(.ontology-hub, .ontology-editor, .ontology-demo-page, .ontology-merge-review) {
+  color: var(--text);
+  gap: 14px;
+}
+.management-pages :is(.ontology-hub-heading, .ontology-summary, .demo-heading, .merge-review-heading, .spg-core-heading) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  gap: 12px 18px;
+  padding: 14px 17px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--management-heading);
+  box-shadow: 0 2px 8px rgb(39 83 123 / 4.5%);
+}
+.management-pages :is(.ontology-hub-heading, .spg-core-heading)::after { display: none; }
+.management-pages .eyebrow { display: none; }
+.management-pages :is(.ontology-hub-heading, .ontology-summary, .demo-heading, .merge-review-heading, .spg-core-heading) h1 {
+  margin: 0 0 5px;
+  color: var(--management-heading);
+  font-size: 20px;
+  line-height: 1.4;
+}
+.management-pages :is(.ontology-hub-heading, .ontology-summary, .demo-heading, .merge-review-heading, .spg-core-heading) p {
+  margin: 0;
+  max-width: 720px;
+  color: var(--management-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.management-pages :is(.ontology-hub-actions, .spg-core-heading-actions, .demo-actions, .merge-review-actions) {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.management-pages :is(.ontology-hub-heading, .spg-core-heading, .demo-heading, .demo-toolbar, .merge-review-heading) button:not(.demo-link, .merge-back),
+.management-pages :is(.demo-panel, .demo-record-strip, .demo-file-tabs) button:not(.demo-link, .ns-icon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid #c6dcf2;
+  border-radius: 4px;
+  background: #fff;
+  color: #347bc7;
+  font-size: 13px;
+  white-space: nowrap;
+  box-shadow: none;
+}
+.management-pages button.primary,
+.management-pages :is(.ontology-hub-heading, .spg-core-heading, .demo-heading, .demo-toolbar, .merge-review-heading, .demo-panel, .demo-record-strip, .demo-file-tabs) button.primary {
+  min-height: 37px;
+  height: auto;
+  border-color: var(--blue);
+  background: var(--blue);
+  color: #fff;
+  font-size: 13px;
+  box-shadow: 0 1px 2px #1452a433;
+}
+.management-pages button:disabled { opacity: .45; cursor: not-allowed; }
+.management-pages :is(.ontology-hub-panel, .demo-panel, .ontology-element-directory, .spg-core-panel, .merge-review-list, .merge-kind-nav, .merge-audit-panel, .model-graph-canvas, .model-graph-inspector) {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(39 83 123 / 4.5%);
+}
+.management-pages .demo-panel { padding: 15px 17px; }
+.management-pages :is(.ontology-hub-toolbar, .spg-core-toolbar, .demo-filters) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+}
+.management-pages .demo-panel > .demo-filters { margin: -15px -17px 0; }
+.management-pages .ontology-hub-toolbar > b,
+.management-pages .spg-core-toolbar b { font-size: 15px; color: var(--management-heading); }
+.management-pages :is(.ontology-hub-toolbar, .spg-core-toolbar) .ontology-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 310px;
+  max-width: 100%;
+  min-width: 160px;
+  height: 34px;
+  margin-left: auto;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  color: #94a0b2;
+}
+.management-pages :is(.ontology-hub-toolbar, .spg-core-toolbar) .ontology-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+}
+.management-pages :is(.demo-filters, .demo-toolbar) :is(input, select),
+.management-pages .spg-version-switcher select {
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+}
+.management-pages .demo-table,
+.management-pages .ontology-table { font-size: 13px; }
+.management-pages :is(.demo-table, .ontology-table) th,
+.management-pages .spg-core-head {
+  min-height: 40px;
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--management-table-head);
+  color: #8497aa;
+  font-size: 12px;
+  font-weight: 400;
+}
+.management-pages :is(.demo-table, .ontology-table) td {
+  padding: 12px;
+  border-bottom: 1px solid #edf1f5;
+  background: #fff;
+  color: #4e6d8e;
+  font-size: 13px;
+  line-height: 1.6;
+  vertical-align: middle;
+}
+.management-pages :is(.demo-table, .ontology-table) td b { color: var(--management-heading); font-size: 13px; }
+.management-pages :is(.demo-table, .ontology-table) td small { margin-top: 4px; color: #8497aa; font-size: 12px; }
+.management-pages :is(.demo-table, .ontology-table) tbody tr:hover td,
+.management-pages :is(.demo-table, .ontology-table) tbody tr.selected td { background: #f4f9fe; }
+.management-pages .ontology-table th:last-child,
+.management-pages .ontology-table td:last-child { border-left: 0; min-width: 120px; }
+.management-pages .ontology-table th:last-child { background: var(--management-table-head); }
+.management-pages :is(.ontology-enter, .demo-link) { color: #347bc7; font-size: 13px; }
+.management-pages :is(.ontology-hub-pagination, .pagination) { padding: 12px 15px; color: #8493a7; font-size: 12px; }
+.management-pages .ontology-hub-pagination button { padding: 5px 9px; border-color: var(--line); border-radius: 4px; font-size: 12px; }
+.management-pages .demo-metrics { gap: 12px; }
+.management-pages .demo-metrics article { padding: 12px 16px; border-color: var(--line); border-radius: 5px; box-shadow: 0 2px 8px rgb(39 83 123 / 4.5%); }
+.management-pages .demo-metrics article::before { display: none; }
+.management-pages .demo-metrics article > span { color: var(--management-muted); font-size: 12px; }
+.management-pages .demo-metrics strong { color: var(--management-heading); font-size: 23px; }
+.management-pages :is(.demo-nav, .demo-tabs) { gap: 4px; border-color: var(--line); }
+.management-pages :is(.demo-nav, .demo-tabs) button { padding: 10px 14px; color: var(--management-muted); font-size: 14px; }
+.management-pages :is(.demo-nav, .demo-tabs) button.active { background: transparent; color: var(--blue); border-bottom-color: var(--blue); }
+.management-pages .demo-info { margin: 0; padding: 10px 13px; border-color: var(--line); border-radius: 5px; background: #f4f9fe; color: var(--management-muted); font-size: 12px; }
+.management-pages .ontology-summary dl { flex-wrap: wrap; gap: 20px; }
+.management-pages .ontology-summary dd { color: var(--text); font-size: 14px; }
+.management-pages .ontology-back { display: inline-block; margin-bottom: 7px; color: var(--management-muted); }
+.management-pages .ontology-editor-layout { grid-template-columns: 255px minmax(0, 1fr); gap: 16px; }
+.management-pages .ontology-directory-heading { padding: 14px 17px 12px; border-color: var(--line); color: var(--management-heading); font-size: 16px; }
+.management-pages .ontology-directory-search { height: 34px; margin: 12px; padding: 0 9px; border-color: var(--line); border-radius: 4px; }
+.management-pages .ontology-directory-search input { font-size: 13px; }
+.management-pages .ontology-directory-category.active,
+.management-pages .ontology-directory-item.selected { color: var(--blue); background: #eaf4ff; }
+.management-pages .ontology-directory-category > button:last-child { font-size: 14px; }
+.management-pages .ontology-directory-item > button:last-child { font-size: 13px; }
+.management-pages .ontology-element-content .spg-core-workspace { gap: 0; }
+.management-pages .spg-core-panel { padding: 0; overflow: hidden; }
+.management-pages .spg-core-panel > .spg-core-heading { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; }
+.management-pages .spg-core-toolbar > div > span { font-size: 12px; color: var(--management-muted); }
+.management-pages .spg-version-switcher > span { color: var(--management-muted); font-size: 12px; }
+.management-pages .spg-version-switcher em { background: #eaf4ff; color: var(--blue); }
+.management-pages .spg-core-table { max-width: 100%; overflow-x: auto; }
+.management-pages .spg-core-row { min-height: 64px; border-bottom: 1px solid #edf1f5; background: #fff; color: #4e6d8e; font-size: 13px; }
+.management-pages .spg-core-head { min-height: 40px; background: var(--management-table-head); color: #8497aa; font-size: 12px; }
+.management-pages .spg-core-row:hover { background: #f4f9fe; }
+.management-pages .spg-core-head:hover { background: var(--management-table-head); }
+.management-pages .spg-core-row > span:last-child { position: sticky; right: 0; background: inherit; }
+.management-pages .spg-core-name > span > b { color: var(--management-heading); font-size: 13px; }
+.management-pages .spg-core-definition,
+.management-pages .spg-tree-description { color: #6b7c93; font-size: 13px; }
+.management-pages :is(.spg-core-name > span > small, .spg-tree-name small) { color: #8497aa; font-size: 12px; }
+.management-pages .spg-element-kind { font-size: 12px; border-radius: 4px; }
+.management-pages .spg-recursive-children { border-color: var(--line); background: #f8fbfe; }
+.management-pages .spg-tree-create-row { border-color: var(--line); background: #f8fbfe; color: var(--management-muted); }
+.management-pages :is(.row-actions button, .management-icon, button.ns-icon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 29px;
+  width: 29px;
+  height: 29px;
+  min-height: 29px;
+  padding: 0;
+  border: 1px solid #c6dcf2;
+  border-radius: 4px;
+  background: #fff;
+  color: #347bc7;
+}
+.management-pages :is(.row-actions button, .management-icon, button.ns-icon) svg { width: 15px; height: 15px; flex: none; }
+.management-pages :is(.row-actions button.danger, .management-icon.danger) { color: #df665e; border-color: #f0d5d2; }
+.management-pages .llm-connection-table th:first-child { width: auto; min-width: 210px; }
+.management-pages .llm-connection-table td:first-child b { display: block; min-width: 180px; }
+.management-pages .llm-connection-table :is(th, td):nth-child(3) { min-width: 130px; }
+.management-pages .llm-connection-table td:nth-child(7) { min-width: 145px; }
+.management-pages .llm-connection-table :is(th, td):last-child { min-width: 90px; }
+.management-pages .management-status { display: inline-block; padding: 3px 7px; border-radius: 4px; font-size: 12px; white-space: nowrap; }
+.management-pages .management-status.enabled { color: #218664; background: #e8f6ee; }
+.management-pages .management-status.disabled { color: #8493a7; background: #f0f3f6; }
+.management-pages .demo-panel h3 { color: var(--management-heading); font-size: 16px; }
+.management-pages .demo-facts dd { color: #4e6d8e; font-size: 13px; }
+.management-pages .demo-facts dt { color: var(--management-muted); font-size: 12px; }
+.management-pages .demo-detail-title h2 { color: var(--management-heading); font-size: 20px; }
+.management-pages :is(.demo-stage-detail, .demo-record-strip) { border-color: var(--line); border-radius: 5px; background: #f8fbfe; }
+.management-pages .demo-panel .demo-file-tabs button.active { background: #eaf4ff; border-color: #92bee8; color: var(--blue); }
+.management-pages :is(.demo-guide-card, .demo-scenario-grid article, .demo-input-file) { border-color: var(--line); border-radius: 5px; box-shadow: none; }
+
+@media (max-width: 1200px) {
+  .management-pages .ontology-editor-layout { grid-template-columns: 220px minmax(0, 1fr); }
+  .management-pages .ontology-summary { align-items: flex-start; }
+}
+@media (max-width: 760px) {
+  .management-pages .ontology-editor-layout { grid-template-columns: minmax(0, 1fr); }
+  .management-pages :is(.ontology-hub-heading, .ontology-summary, .demo-heading, .spg-core-heading) { padding: 12px 14px; }
+  .management-pages .ontology-hub-toolbar .ontology-search { width: 100%; margin-left: 0; }
+  .management-pages .spg-core-toolbar .ontology-search { flex: 1; }
+  .management-pages .ontology-summary dl { gap: 12px 18px; }
+}

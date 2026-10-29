@@ -1,0 +1,103 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam linetype ortho
+
+package "引擎持久化实体" {
+  class Job {
+    +id : String
+    +handlerKey : String
+    +operatorId : String
+    +extension : JsonDocument
+    +revision : long
+  }
+  class JobExecution {
+    +id : String
+    +jobId : String
+    +status : ExecutionStatus
+    +resolvedInputObjects : JsonDocument
+    +retryOfExecutionId : String
+  }
+  class Task {
+    +id : String
+    +executionId : String
+    +taskKey : String
+    +businessKey : String
+    +effectKey : String
+    +inputObjects : JsonDocument
+    +outputObjects : JsonDocument
+    +retryOfTaskId : String
+  }
+  Job "1" -- "0..*" JobExecution : 执行历史
+  JobExecution "1" -- "0..*" Task : 本次任务计划
+}
+
+package "快照与调用上下文" {
+  class JobSnapshot #EAF4FF {
+    +jobId : String
+    +jobRevision : long
+    +handlerKey : String
+    +operatorId : String
+    +extension : JsonDocument
+    +maxConcurrency : int
+  }
+  class PlanningContext {
+    +executionId : String
+    +requestedInputObjects : JsonDocument
+    +caller : CallContext
+  }
+  class TaskContext {
+    +executionId : String
+    +taskId : String
+    +effectKey : String
+    +taskInputObjects : JsonDocument
+    +executionInputObjects : JsonDocument
+    +taskExtension : JsonDocument
+  }
+  interface CancellationToken {
+    +isCancellationRequested() : boolean
+    +throwIfCancellationRequested() : void
+  }
+  JobExecution "1" --> "1" JobSnapshot : 固定定义
+  PlanningContext --> JobSnapshot
+  TaskContext --> JobSnapshot
+  PlanningContext --> CancellationToken
+  TaskContext --> CancellationToken
+}
+
+package "规划与回调结果" {
+  interface TaskPlanSink {
+    +setResolvedInputObjects(json) : void
+    +add(spec) : void
+    +addBatch(specs) : void
+  }
+  class TaskSpec {
+    +taskKey : String
+    +businessKey : String
+    +inputObjects : JsonDocument
+    +extension : JsonDocument
+  }
+  class TaskResult {
+    +outcome : TaskOutcome
+    +outputObjects : JsonDocument
+    +extension : JsonDocument
+  }
+  TaskPlanSink ..> TaskSpec : 接收计划
+  TaskSpec ..> Task : 引擎创建
+  TaskResult ..> Task : 引擎提交结果
+}
+
+note top of Job
+  三实体均有项目统一固定字段。
+  此图仅展开与调用有关的逻辑属性。
+end note
+note bottom of TaskContext
+  单任务目标与全局分析范围分开。
+  字段血缘 Task 仍能访问其他表。
+end note
+@enduml

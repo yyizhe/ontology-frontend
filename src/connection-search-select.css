@@ -1,0 +1,21 @@
+.connection-search-select { min-width:0; }
+.connection-select-control { display:flex; align-items:center; gap:8px; min-height:38px; padding:0 10px; border:1px solid #dce5ef; border-radius:4px; background:white; color:var(--muted); }
+.connection-select-control.expanded,.connection-select-control:focus-within { border-color:#78b2ff; box-shadow:0 0 0 2px #1677ff12; }
+.connection-select-control>svg { flex:none; }
+.connection-select-control input { flex:1; min-width:0; width:100%; height:36px; padding:0; border:0; outline:0; background:transparent; color:var(--text); font-size:12px; }
+.connection-select-control button { display:grid; place-items:center; flex:none; width:24px; height:30px; padding:0; border-radius:3px; }
+.connection-select-control button:hover { color:var(--blue); background:#edf4fc; }
+.connection-select-summary { margin-top:7px; color:var(--muted); font-size:11px; }
+.connection-select-menu { position:fixed; z-index:100; overflow:auto; overscroll-behavior:contain; padding:4px; border:1px solid #dce5ef; border-radius:5px; background:white; box-shadow:0 6px 20px #1b355222; }
+.connection-select-option { display:flex; align-items:center; gap:10px; min-height:54px; padding:8px 10px; border-radius:3px; cursor:pointer; }
+.connection-select-option.active { background:#f1f6fc; }
+.connection-select-option[aria-selected="true"] { color:var(--blue); background:#eaf3ff; }
+.connection-select-option>.icon { display:grid; place-items:center; width:30px; height:30px; flex:none; }
+.connection-select-option>span { flex:1; min-width:0; }
+.connection-select-option b { display:block; overflow-wrap:anywhere; font-size:12px; font-weight:500; }
+.connection-select-option small { display:block; margin-top:4px; color:var(--muted); font-size:11px; }
+.connection-select-option>svg { flex:none; }
+.connection-select-empty { padding:20px 10px; color:var(--muted); font-size:12px; text-align:center; overflow-wrap:anywhere; }
+@media(max-width:760px) {
+  .collection-task-modal .connection-picker { flex-wrap:wrap; gap:10px; }
+}

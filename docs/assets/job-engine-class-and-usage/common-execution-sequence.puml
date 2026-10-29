@@ -1,0 +1,52 @@
+@startuml
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam roundcorner 0
+hide footbox
+
+actor "宿主业务服务" as Host
+participant "定义/执行 API" as API
+database "引擎三表" as Store
+participant "后台规划与调度" as Runtime
+participant "业务 Handler" as Handler
+database "业务资源与产物" as Business
+
+== 定义与受理 ==
+Host -> API : create(command, caller)
+API -> Handler : validate(configuration, caller)
+Handler --> API : 校验通过
+API -> Store : 保存 Job
+API --> Host : JobView
+Host -> API : execute(command, caller)
+API -> Store : 幂等准入 + JobExecution + JobSnapshot
+API --> Host : ExecutionReceipt（已受理）
+
+== 异步规划 ==
+Runtime -> Handler : plan(context, sink)
+Handler -> Business : 解析对象/模板/算子版本
+Business --> Handler : 固定的业务引用
+Handler -> Runtime : setResolvedInputObjects + addBatch
+Runtime -> Store : 分批保存 PENDING Task
+Handler --> Runtime : plan 正常结束
+Runtime -> Store : 封存有效计划，进入 RUNNING
+
+== 有界并发执行 ==
+loop 每个 Task；实际执行受并发上限约束
+  Runtime -> Store : 比较状态并领取 Task
+  Runtime -> Handler : execute(TaskContext)
+  Handler -> Business : 查询 effectKey 并幂等保存产物
+  Business --> Handler : 业务版本引用
+  Handler --> Runtime : TaskResult
+  Runtime -> Store : 同一事务更新 Task 终态及计数
+end
+Runtime -> Store : 汇总执行终态与结束时间
+
+== 查询结果 ==
+Host -> API : getExecution / listTasks / statistics
+API -> Store : 查询持久化状态与输出引用
+Store --> API : 执行及任务记录
+API --> Host : DTO / Page / Statistics
+Host -> Business : 按输出版本 ID 查询资产、元数据或血缘
+Business --> Host : 文件信息或图谱结果
+@enduml

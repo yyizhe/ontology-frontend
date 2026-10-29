@@ -1,0 +1,24 @@
+.enrichment-tree-search { display:flex; align-items:center; gap:7px; margin:8px; padding:0 8px; height:34px; border:1px solid #dce5ef; border-radius:4px; color:var(--muted); background:#fff; }
+.enrichment-tree-search svg { flex:none; }
+.enrichment-task-modal .enrichment-tree-search input { width:100%; min-width:0; flex:1; height:30px; margin:0; padding:0; border:0; outline:0; background:transparent; font-size:12px; }
+.enrichment-tree-search:focus-within { outline:2px solid var(--blue); outline-offset:1px; }
+.enrichment-tree-search button { display:grid; place-items:center; flex:none; padding:0; }
+.enrichment-tree-list { height:220px; padding:0 7px 7px; overflow:auto; overscroll-behavior:contain; }
+.enrichment-tree-list ul { margin:0; padding:0; list-style:none; }
+.enrichment-tree-row { display:flex; align-items:center; min-height:36px; border-radius:4px; color:#5d7691; }
+.enrichment-tree-row:hover { background:#f3f7fc; }
+.enrichment-tree-row.selected { background:#eaf3ff; color:var(--blue); }
+.enrichment-tree-toggle { display:grid; place-items:center; flex:none; width:22px; height:34px; padding:0; color:var(--muted); }
+.enrichment-tree-toggle:disabled { cursor:default; }
+.mask .enrichment-tree-row label { display:flex; flex-direction:row; align-items:center; flex:1; min-width:0; gap:6px; margin:0; padding:7px 6px 7px 0; font-size:12px; color:inherit; cursor:pointer; }
+.mask .enrichment-tree-row input { width:14px; height:14px; min-height:0; flex:none; margin:0; padding:0; accent-color:var(--blue); }
+.enrichment-tree-row label>svg { flex:none; color:#71839a; }
+.enrichment-tree-row label>span { flex:1; min-width:0; overflow-wrap:anywhere; }
+.enrichment-tree-row em { min-width:18px; flex:none; color:#8294a8; font-size:11px; font-style:normal; text-align:right; }
+.enrichment-tree-path { min-height:36px; max-height:76px; overflow:auto; padding:8px 13px; border-top:1px solid #e6eef7; color:#617b97; font-size:11px; line-height:1.5; overflow-wrap:anywhere; }
+.enrichment-task-modal .enrichment-file-list { max-height:304px; }
+.enrichment-configuration-summary small { min-width:0; overflow-wrap:anywhere; }
+@media(max-width:680px) {
+  .enrichment-task-modal .enrichment-source-grid { grid-template-columns:minmax(0,1fr); }
+  .enrichment-tree-list { height:200px; }
+}

@@ -1,0 +1,25 @@
+.asset-level-badge { display:inline-flex; align-items:center; flex:none; padding:3px 7px; border-radius:3px; font-size:11px; line-height:1.4; white-space:nowrap; }
+.asset-level-badge.platform { color:#2869b5; background:#eaf2ff; }
+.asset-level-badge.organization { color:#197c64; background:#e8f6ef; }
+.asset-level-badge.project { color:#88652c; background:#fbf2da; }
+.sidebar .brand { padding-bottom:16px; }
+.brand .brand-platform { font:11px 'Noto Sans SC',sans-serif; }
+.sidebar .workspace-context { margin:0 4px 14px; padding:0 4px 14px; border-bottom:1px solid var(--line); }
+.organization-switcher,.workspace-project { display:flex; align-items:center; gap:7px; min-width:0; min-height:36px; color:#7d90a7; font-size:11px; }
+.organization-switcher>svg,.workspace-project>svg { flex:none; }
+.organization-switcher>span,.workspace-project>span { flex:none; }
+.organization-switcher select { flex:1; min-width:0; width:100%; height:32px; padding:0 4px; border:1px solid var(--line); border-radius:4px; background:#fff; color:var(--text); font-size:12px; }
+.workspace-project { margin-left:10px; padding-left:8px; border-left:1px solid var(--line); }
+.workspace-project .project-switcher { flex:1; min-width:0; }
+.workspace-project .project-switcher-trigger { display:flex; width:100%; min-width:0; max-width:none; margin:0; padding:6px; font-size:12px; }
+.workspace-project .project-switcher-trigger>svg:first-child { display:none; }
+.workspace-project .project-switcher-name { min-width:0; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:left; }
+.workspace-project .project-popover { left:-50px; }
+.project-list-empty { padding:16px; color:var(--muted); font-size:12px; }
+.mobile-workspace-context { display:none; }
+@media(max-width:680px) {
+  .mobile-workspace-context { display:block; padding:10px 12px; border-bottom:1px solid var(--line); background:#fff; }
+  .mobile-workspace-context .workspace-context { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; }
+  .mobile-workspace-context .workspace-project { margin-left:0; padding-left:8px; }
+  .mobile-workspace-context .project-popover { right:0; left:auto; width:min(300px,calc(100vw - 24px)); }
+}
